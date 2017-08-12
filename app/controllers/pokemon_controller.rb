@@ -18,14 +18,21 @@ class PokemonController < ApplicationController
       result << type["type"]["name"]
     end
 
+    puts "===================================="
+    puts "Printing out `ENV`"
+    puts ENV
+    puts "Printing out `request.env`"
+    puts request.env
+    puts "===================================="
+
     # added 'verify => false' to address issue where API key verification fails
-    # res = HTTParty.get("https://api.giphy.com/v1/gifs/search?api_key=333a6831167247f3b7f9736d4c843622&q=#{params[:id]}&rating=g", :verify => false)
-    res = HTTParty.get("http://api.giphy.com/v1/gifs/search?api_key=#{ENV["GIPHY_KEY"]}&q=#{params[:id]}&rating=g")
+    res = HTTParty.get("https://api.giphy.com/v1/gifs/search?api_key=#{ENV['GIPHY_KEY']}&q=#{name}&rating=g", :verify => false)
 
     body = JSON.parse(res.body)
-    gif_url = body["data"][0]["url"]
+    # gif_url = body["data"][0]["url"]
+    gif_url = body["data"][0]["images"]["original"]["url"]
 
-
-    render json: {"id": id,"name": name, "types": result, "url": gif_url}
+    @response = {"id" =>  id,"name" => name, "types" => result, "url" => gif_url}
+    # render json: {"id": id,"name": name, "types": result, "url": gif_url}
   end
 end
