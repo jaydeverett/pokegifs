@@ -26,7 +26,9 @@ class PokemonController < ApplicationController
     puts "===================================="
 
     # added 'verify => false' to address issue where API key verification fails
-    res = HTTParty.get("https://api.giphy.com/v1/gifs/search?api_key=#{ENV['GIPHY_KEY']}&q=#{name}&rating=g", :verify => false)
+    res = HTTParty.get("https://api.giphy.com/v1/gifs/search?api_key=333a6831167247f3b7f9736d4c843622&q=pikachu&rating=g")
+
+
 
     body = JSON.parse(res.body)
     # gif_url = body["data"][0]["url"]
